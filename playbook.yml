@@ -14,9 +14,14 @@
       dest: /home/{{ ansible_user_id }}/install.sh
       mode: 0755
     become: yes
-  - name: Execute installer
+  - name: Execute nvm installer
     shell: /bin/bash /home/{{ ansible_user_id }}/install.sh
       creates=/home/{{ ansible_user_id }}/.nvm/nvm.sh
-  - name: Install nvm
-    shell: /bin/bash -c "source ~/.nvm/nvm.sh && nvm install {{ npm_version }} && nvm alias default {{ npm_version }}"
+  - name: Install npm
+    shell: | 
+      /bin/bash -c "source ~/.nvm/nvm.sh && \
+      nvm install {{ npm_version }} && \
+      nvm alias default {{ npm_version }} && \
+      npm install -g yarn"
+
       creates=/home/{{ ansible_user_id }}/.nvm/alias
